@@ -118,3 +118,21 @@ buttons.forEach(button => {
     });
     });
 
+document.addEventListener("keydown", (event) => {
+	const key = event.key;
+	if (key >= "0" && key <= "9") {
+		updateDisplay(key);
+	} else if (key === ".") {
+		if (!display.value.includes(".")) {
+			updateDisplay(key);
+		}
+	} else if (key === "+" || key === "-" || key === "*" || key === "/") {
+		handleOperator(key);
+	} else if (key === "Enter" || key === "=") {
+		handleEqual();
+	} else if (key === "Backspace") {
+		backspace();
+	} else if (key === "Escape" || key === "c" || key === "C") {
+		clear();
+	}
+});
