@@ -190,5 +190,6 @@ document.addEventListener('keydown', (event) => {
 		handleBackspace();
 		updateDisplay();
 	}
+    event.preventDefault();
 });
 
