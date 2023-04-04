@@ -13,6 +13,36 @@ function updateDisplay() {
 }
 
 
+const calculatorButtons = document.querySelectorAll('.calc-button');
+
+
+calculatorButtons.forEach(button => {
+    button.addEventListener('click', () => {
+        const buttonValue = button.getAttribute('data-value');
+
+        if (buttonValue === 'clear') {
+            clearAll();
+            updateDisplay();
+        } else if (buttonValue === 'backspace') {
+            handleBackspace();
+            updateDisplay();
+        } else if (buttonValue === 'equals') {
+            handleEquals();
+            updateDisplay();
+        } else if (buttonValue === 'decimal') {
+            inputDecimal(buttonValue);
+            updateDisplay();
+        } else if (/\d/.test(buttonValue)) {
+            inputDigit(buttonValue);
+            updateDisplay();
+        } else {
+            handleOperator(buttonValue);
+            updateDisplay();
+        }
+    });
+});
+
+
 updateDisplay();
 
 
