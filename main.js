@@ -43,21 +43,7 @@ function percentage() {
     }
 
 //Function to handle operator button
-function handleOperator(value) {
-    if (firstOperand === null) {
-    firstOperand = Number(display.value);
-    operator = value;
-    clearDisplay = true;
-    } else if (operator !== null) {
-    secondOperand = Number(display.value);
-    result = operate(operator, firstOperand, secondOperand);
-    display.value = result;
-    firstOperand = result;
-    secondOperand = null;
-    operator = value;
-    clearDisplay = true;
-    }
-}
+
    
 //Function to handle equal button
 function handleEqual() {
