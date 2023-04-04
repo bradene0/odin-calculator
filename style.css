@@ -31,3 +31,19 @@ body {
     display: flex;
 }
 
+.button-row button {
+    flex: 1;
+    height: 50px;
+    background-color: #ccc;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+}
+
+.button-row button:hover {
+    background-color: #ddd;
+}
+
+.button-row button:active {
+    background-color: #bbb;
+}
