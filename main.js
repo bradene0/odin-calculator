@@ -17,3 +17,12 @@ function updateDisplay(value) {
         display.value += value;
     }
 }
+
+function clear() {
+    display.value = "";
+    firstOperand = null;
+    secondOperand = null;
+    operator = null;
+    result = null;
+    clearDisplay = false;
+    }
