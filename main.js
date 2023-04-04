@@ -51,5 +51,15 @@ function handleOperator(value) {
     clearDisplay = true;
     }
 }
-        
-        
+   
+function handleEqual() {
+    if (operator !== null && secondOperand === null) {
+    secondOperand = Number(display.value);
+    result = operate(operator, firstOperand, secondOperand);
+    display.value = result;
+    firstOperand = result;
+    secondOperand = null;
+    operator = null;
+    clearDisplay = true;
+    }
+    }
