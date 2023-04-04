@@ -63,3 +63,47 @@ function handleEqual() {
     clearDisplay = true;
     }
     }
+
+function operate(operator, firstOperand, secondOperand) {
+    switch (operator) {
+    case "+":
+    return firstOperand + secondOperand;
+    case "-":
+    return firstOperand - secondOperand;
+    case "*":
+    return firstOperand * secondOperand;
+    case "/":
+    return firstOperand / secondOperand;
+    default:
+    return null;
+    }
+}
+
+buttons.forEach(button => {
+    button.addEventListener("click", () => {
+    const value = button.textContent;
+    switch (value) {
+    case "C":
+    clear();
+    break;
+    case "←":
+    backspace();
+    break;
+    case "%":
+    percentage();
+    break;
+    case "+":
+    case "-":
+    case "*":
+    case "/":
+    handleOperator(value);
+    break;
+    case "=":
+    handleEqual();
+    break;
+    default:
+    updateDisplay(value);
+    break;
+    }
+    });
+    });
