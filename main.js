@@ -26,3 +26,9 @@ function clear() {
     result = null;
     clearDisplay = false;
     }
+
+    function backspace() {
+        display.value = display.value.slice(0, -1);
+        }
+        
+        
