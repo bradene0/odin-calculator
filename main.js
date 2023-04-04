@@ -118,6 +118,7 @@ buttons.forEach(button => {
     });
     });
 
+//Added event listener to listen for key presses!
 document.addEventListener("keydown", (event) => {
 	const key = event.key;
 	if (key >= "0" && key <= "9") {
