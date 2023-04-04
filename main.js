@@ -1,14 +1,17 @@
 //Get all the buttons
 const buttons = document.querySelectorAll("button");
 
+//Gets the display input
 const display = document.querySelector("#result");
 
+//Initializes the calculator's variables
 let firstOperand = null;
 let secondOperand = null;
 let operator = null;
 let result = null;
 let clearDisplay = false;
 
+//Function to update the display
 function updateDisplay(value) {
     if (clearDisplay) {
         display.value = value;
@@ -18,6 +21,7 @@ function updateDisplay(value) {
     }
 }
 
+//Function to clear the display
 function clear() {
     display.value = "";
     firstOperand = null;
@@ -27,15 +31,18 @@ function clear() {
     clearDisplay = false;
     }
 
+//Function to handle backspaces
 function backspace() {
     display.value = display.value.slice(0, -1);
     }
 
+//Function to handle percentages
 function percentage() {
     display.value = Number(display.value) / 100;
     result = display.value;
     }
 
+//Function to handle operator button
 function handleOperator(value) {
     if (firstOperand === null) {
     firstOperand = Number(display.value);
@@ -52,6 +59,7 @@ function handleOperator(value) {
     }
 }
    
+//Function to handle equal button
 function handleEqual() {
     if (operator !== null && secondOperand === null) {
     secondOperand = Number(display.value);
@@ -64,6 +72,7 @@ function handleEqual() {
     }
     }
 
+//Function to perform operations
 function operate(operator, firstOperand, secondOperand) {
     switch (operator) {
     case "+":
@@ -79,6 +88,7 @@ function operate(operator, firstOperand, secondOperand) {
     }
 }
 
+//Adds event listeners to each button
 buttons.forEach(button => {
     button.addEventListener("click", () => {
     const value = button.textContent;
@@ -107,3 +117,4 @@ buttons.forEach(button => {
     }
     });
     });
+
