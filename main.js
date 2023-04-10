@@ -1,225 +1,119 @@
+// Get all the buttons
+const buttons = document.querySelectorAll("button");
 
-const calculator = {
-	displayValue: '0',
-	firstOperand: null,
-	waitingForSecondOperand: false,
-	operator: null,
-};
+// Get the display input
+const display = document.querySelector("#result");
 
+// Initialize the calculator variables
+let firstOperand = null;
+let secondOperand = null;
+let operator = null;
+let result = null;
+let clearDisplay = false;
 
-function updateDisplay() {
-	const display = document.getElementById('display');
-	display.value = calculator.displayValue;
-}
-
-
-const calculatorButtons = document.querySelectorAll('.calc-button');
-
-
-calculatorButtons.forEach(button => {
-    button.addEventListener('click', () => {
-        const buttonValue = button.getAttribute('data-value');
-
-        if (buttonValue === 'clear') {
-            clearAll();
-            updateDisplay();
-        } else if (buttonValue === 'backspace') {
-            handleBackspace();
-            updateDisplay();
-        } else if (buttonValue === 'equals') {
-            handleEquals();
-            updateDisplay();
-        } else if (buttonValue === 'decimal') {
-            inputDecimal(buttonValue);
-            updateDisplay();
-        } else if (/\d/.test(buttonValue)) {
-            inputDigit(buttonValue);
-            updateDisplay();
-        } else {
-            handleOperator(buttonValue);
-            updateDisplay();
-        }
-    });
-});
-
-
-updateDisplay();
-
-
-function inputDigit(digit) {
-	if (calculator.waitingForSecondOperand === true) {
-		calculator.displayValue = digit;
-		calculator.waitingForSecondOperand = false;
+// Function to update the display
+function updateDisplay(value) {
+	if (clearDisplay) {
+		display.value = value;
+		clearDisplay = false;
 	} else {
-		calculator.displayValue = calculator.displayValue === '0' ? digit : calculator.displayValue + digit;
+		display.value += value;
 	}
 }
 
-
-function inputDecimal(decimal) {
-	if (calculator.waitingForSecondOperand === true) {
-		calculator.displayValue = '0.';
-		calculator.waitingForSecondOperand = false;
-		return;
+// Function to clear the
+function clear() {
+	display.value = "";
+	firstOperand = null;
+	secondOperand = null;
+	operator = null;
+	result = null;
+	clearDisplay = false;
 	}
-
-	if (!calculator.displayValue.includes(decimal)) {
-		calculator.displayValue += decimal;
+	
+	// Function to handle backspace
+	function backspace() {
+	display.value = display.value.slice(0, -1);
 	}
-}
-
-
-function handleOperator(nextOperator) {
-	const input = parseFloat(calculator.displayValue);
-
-	if (calculator.operator && calculator.waitingForSecondOperand) {
-		calculator.operator = nextOperator;
-		return;
+	
+	// Function to handle percentage
+	function percentage() {
+	display.value = Number(display.value) / 100;
+	result = display.value;
 	}
-
-	if (calculator.firstOperand == null) {
-		calculator.firstOperand = input;
-	} else if (calculator.operator) {
-		const currentValue = calculator.firstOperand || 0;
-		const result = performCalculation[calculator.operator](currentValue, input);
-
-		calculator.displayValue = String(result);
-		calculator.firstOperand = result;
+	
+	// Function to handle operator buttons
+	function handleOperator(value) {
+	if (firstOperand === null) {
+	firstOperand = Number(display.value);
+	operator = value;
+	clearDisplay = true;
+	} else if (operator !== null) {
+	secondOperand = Number(display.value);
+	result = operate(operator, firstOperand, secondOperand);
+	display.value = result;
+	firstOperand = result;
+	secondOperand = null;
+	operator = value;
+	clearDisplay = true;
 	}
-
-	calculator.waitingForSecondOperand = true;
-	calculator.operator = nextOperator;
-}
-
-
-const performCalculation = {
-	'/': (x, y) => x / y,
-	'*': (x, y) => x * y,
-	'+': (x, y) => x + y,
-	'-': (x, y) => x - y,
-	'=': (x, y) => y
-};
-
-
-function handleEquals() {
-	if (calculator.operator === '/') {
-		const input = parseFloat(calculator.displayValue);
-
-		if (input === 0) {
-			calculator.displayValue = 'Error!! Nice try!';
-			calculator.firstOperand = null;
-			calculator.waitingForSecondOperand = false;
-			calculator.operator = null;
-			return;
-		}
 	}
-
-	const input = parseFloat(calculator.displayValue);
-
-	if (calculator.firstOperand == null && calculator.operator === '/') {
-		calculator.displayValue = 'Error!! Nice try!';
-		calculator.waitingForSecondOperand = false;
-		calculator.operator = null;
-		return;
+	
+	// Function to handle equal button
+	function handleEqual() {
+	if (operator !== null && secondOperand === null) {
+	secondOperand = Number(display.value);
+	result = operate(operator, firstOperand, secondOperand);
+	display.value = result;
+	firstOperand = result;
+	secondOperand = null;
+	operator = null;
+	clearDisplay = true;
 	}
-
-	if (calculator.waitingForSecondOperand && calculator.operator) {
-		calculator.firstOperand = performCalculation[calculator.operator](calculator.firstOperand, input);
-		calculator.displayValue = String(calculator.firstOperand);
-		calculator.waitingForSecondOperand = false;
-	} else {
-		calculator.displayValue = String(input);
 	}
-
-	calculator.operator = null;
-}
-
-
-function clearCalculator() {
-	calculator.displayValue = '0';
-	calculator.firstOperand = null;
-	calculator.waitingForSecondOperand = false;
-	calculator.operator = null;
-}
-
-
-function handleBackspace() {
-	if (calculator.displayValue.length === 1) {
-		calculator.displayValue = '0';
-	} else {
-		calculator.displayValue = calculator.displayValue.slice(0, -1);
+	
+	// Function to perform operation based on operator
+	function operate(operator, firstOperand, secondOperand) {
+	switch (operator) {
+	case "+":
+	return firstOperand + secondOperand;
+	case "-":
+	return firstOperand - secondOperand;
+	case "*":
+	return firstOperand * secondOperand;
+	case "/":
+	return firstOperand / secondOperand;
+	default:
+	return null;
 	}
-}
-
-
-const digitButtons = document.querySelectorAll('.digit');
-digitButtons.forEach(button => {
-	button.addEventListener('click', () => {
-		inputDigit(button.innerText);
-		updateDisplay();
+	}
+	
+	// Add event listeners to buttons
+	buttons.forEach(button => {
+	button.addEventListener("click", () => {
+	const value = button.textContent;
+	switch (value) {
+	case "C":
+	clear();
+	break;
+	case "←":
+	backspace();
+	break;
+	case "%":
+	percentage();
+	break;
+	case "+":
+	case "-":
+	case "*":
+	case "/":
+	handleOperator(value);
+	break;
+	case "=":
+	handleEqual();
+	break;
+	default:
+	updateDisplay(value);
+	break;
+	}
 	});
-});
-
-
-const decimalButton = document.getElementById('decimal');
-decimalButton.addEventListener('click', () => {
-	inputDecimal(decimalButton.innerText);
-	updateDisplay();
-});
-
-
-const operatorButtons = document.querySelectorAll('.operator');
-operatorButtons.forEach(button => {
-	button.addEventListener('click', () => {
-		handleOperator(button.innerText);
-		updateDisplay();
 	});
-});
-
-
-const equalsButton = document.getElementById('equals');
-equalsButton.addEventListener('click', () => {
-	handleEquals();
-	updateDisplay();
-});
-
-
-const clearButton = document.getElementById('clear');
-clearButton.addEventListener('click', () => {
-	clearCalculator();
-	updateDisplay();
-});
-
-
-const backButton = document.getElementById('backspace');
-backButton.addEventListener('click', () => {
-	handleBackspace();
-	updateDisplay();
-});
-
-
-document.addEventListener('keydown', (event) => {
-	const key = event.key;
-	const digit = /[0-9]/;
-	const operator = /[\+\-\*\/]/;
-	const decimal = /\./;
-
-	if (digit.test(key)) {
-		inputDigit(key);
-		updateDisplay();
-	} else if (operator.test(key)) {
-		handleOperator(key);
-		updateDisplay();
-	} else if (decimal.test(key)) {
-		inputDecimal(key);
-		updateDisplay();
-	} else if (key === 'Enter') {
-		handleEquals();
-		updateDisplay();
-	} else if (key === 'Backspace') {
-		handleBackspace();
-		updateDisplay();
-	}
-    event.preventDefault();
-});
-
