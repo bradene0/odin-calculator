@@ -1,44 +1,45 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <link rel="stylesheet" href="style.css">
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Calculator</title>
+	<meta charset="UTF-8">
+	<title>Calculator</title>
+	<link rel="stylesheet" type="text/css" href="style.css">
 </head>
 <body>
-	<div class="calculator-wrapper">
-		<form class="calculator" onsubmit="return false;">
-			<div class="display-container">
-				<input id="display" type="text" name="display" readonly>
-			</div>
-            <div class="calc-container">
-                <input type="text" class="calc-display" value="0" disabled>
-              
-                <button class="calc-button" data-value="clear">AC</button>
-                <button class="calc-button" data-value="backspace">&larr;</button>
-                <button class="calc-button" data-value="/">/</button>
-                <button class="calc-button" data-value="*">&times;</button>
-                <button class="calc-button" data-value="7">7</button>
-                <button class="calc-button" data-value="8">8</button>
-                <button class="calc-button" data-value="9">9</button>
-                <button class="calc-button" data-value="-">-</button>
-                <button class="calc-button" data-value="4">4</button>
-                <button class="calc-button" data-value="5">5</button>
-                <button class="calc-button" data-value="6">6</button>
-                <button class="calc-button" data-value="+">+</button>
-                <button class="calc-button" data-value="1">1</button>
-                <button class="calc-button" data-value="2">2</button>
-                <button class="calc-button" data-value="3">3</button>
-                <button class="calc-button" data-value="decimal">.</button>
-                <button class="calc-button" data-value="0">0</button>
-                <button class="calc-button" data-value="equals">=</button>
-              </div>
-              
-</div>
-
-    </div>
-    <script src="main.js"></script>
+	<div class="calculator">
+		<div class="display">
+			<input type="text" id="result" disabled>
+		</div>
+		<div class="button-row">
+			<button id="clear">C</button>
+			<button id="backspace">&larr;</button>
+			<button id="percentage">%</button>
+			<button id="divide">/</button>
+		</div>
+		<div class="button-row">
+			<button id="seven">7</button>
+			<button id="eight">8</button>
+			<button id="nine">9</button>
+			<button id="multiply">*</button>
+		</div>
+		<div class="button-row">
+			<button id="four">4</button>
+			<button id="five">5</button>
+			<button id="six">6</button>
+			<button id="subtract">-</button>
+		</div>
+		<div class="button-row">
+			<button id="one">1</button>
+			<button id="two">2</button>
+			<button id="three">3</button>
+			<button id="add">+</button>
+		</div>
+		<div class="button-row">
+			<button id="zero">0</button>
+			<button id="decimal">.</button>
+			<button id="equals">=</button>
+		</div>
+	</div>
+	<script src="script.js"></script>
 </body>
 </html>
